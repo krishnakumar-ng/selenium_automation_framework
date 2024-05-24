@@ -1,4 +1,6 @@
 package com.selenium.automation.listeners;
 
-public class TestListener {
+import org.testng.ITestListener;
+
+public class TestListener implements ITestListener {
 }
