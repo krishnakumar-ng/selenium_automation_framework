@@ -15,41 +15,30 @@ import java.net.URL;
         "system:properties",
         "system:env",
         "file:${user.dir}/src/test/resources/config/cucumber.properties",
-        "file:${user.dir}/src/test/resources/config/${env}.properties"
+        "file:${user.dir}/src/test/resources/config/${test.env}.properties"
 })
 public interface ConfigPropertiesFactory extends Config {
 
     public static ConfigPropertiesFactory CONFIG_PROPERTIES = ConfigCache.getOrCreate(ConfigPropertiesFactory.class);
 
-    @DefaultValue("staging")
-    String environment();
-
-    @Key("${environment}.url")
+    @Key("base.url")
     String url();
-
-    String override_report();
-
-    boolean passed_step_screenshots();
-
-    boolean failed_step_screenshots();
-
-    boolean skipped_step_screenshots();
-
-    boolean retry_failed_tests();
-
-    int retry_count();
 
     @DefaultValue("LOCAL")
     @ConverterClass(StringToRunTypeConverter.class)
+    @Key("run.mode")
     RunType run_mode();
 
     @DefaultValue("SELENIUMGRID")
     @ConverterClass(StringToBrowserRemoteModeTypeConverter.class)
+    @Key("remote.mode")
     BrowserRemoteModeType remote_mode();
 
     @ConverterClass(StringToUrlConverter.class)
+    @Key("selenium.grid.url")
     URL seleniumGridUrl();
 
     @ConverterClass(StringToUrlConverter.class)
+    @Key("selenoid.url")
     URL selenoidUrl();
 }

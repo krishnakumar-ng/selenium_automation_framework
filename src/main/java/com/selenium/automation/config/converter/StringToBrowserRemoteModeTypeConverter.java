@@ -13,6 +13,6 @@ public class StringToBrowserRemoteModeTypeConverter implements Converter<Browser
                 of("SELENIUMGRID", BrowserRemoteModeType.SELENIUMGRID);
 
         return stringBrowserRemoteModeTypeMap.getOrDefault(browserRemoteModeType.toUpperCase(),
-                BrowserRemoteModeType.SELENOID);
+                BrowserRemoteModeType.SELENIUMGRID);
     }
 }

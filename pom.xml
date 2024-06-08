@@ -22,7 +22,7 @@
         <lombok.version>1.18.30</lombok.version>
         <noexception.version>1.9.1</noexception.version>
         <owner.version>1.0.12</owner.version>
-        <selenium-java.version>4.17.0</selenium-java.version>
+        <selenium-java.version>4.21.0</selenium-java.version>
         <testng.version>7.10.2</testng.version>
         <test-data-supplier.version>2.3.0</test-data-supplier.version>
         <webdrivermanager-version>5.7.0</webdrivermanager-version>

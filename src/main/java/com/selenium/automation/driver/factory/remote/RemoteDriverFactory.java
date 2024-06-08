@@ -18,6 +18,7 @@ public final class RemoteDriverFactory {
 
     static {
         MAP.put(BrowserRemoteModeType.SELENIUMGRID, SeleniumGridFactory::getDriver);
+        MAP.put(BrowserRemoteModeType.SELENOID, SelenoidFactory::getDriver);
     }
 
     public static WebDriver getDriver(BrowserRemoteModeType browserRemoteMode, BrowserType browserType) {
