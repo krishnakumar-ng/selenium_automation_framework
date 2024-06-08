@@ -6,22 +6,22 @@ import org.openqa.selenium.WebDriver;
 
 /**
  * DriverManager class helps to achieve thread safety for the driver instance.
- * @author Krishnakumar
+ * @author Administrator
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DriverManager {
+public final class DriverManager {
 
-    private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
+	private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
 
-    public static WebDriver getDriver() {
-        return threadLocalDriver.get();
-    }
+	public static WebDriver getDriver() {
+		return threadLocalDriver.get();
+	}
 
-    public static void setDriver(WebDriver driver) {
-        threadLocalDriver.set(driver);
-    }
-
-    public static void unload() {
-        threadLocalDriver.remove();
-    }
+	public static void setDriver(WebDriver driver) {
+		threadLocalDriver.set(driver);
+	}
+	
+	public static void unload() {
+		threadLocalDriver.remove();
+	}
 }

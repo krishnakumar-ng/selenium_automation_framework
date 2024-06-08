@@ -1,9 +1,8 @@
 package com.selenium.automation.tests;
 
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.Test;
 
-public class LaptopSearchTest {
+public class AmazonSearchTest {
 
     @Test
     public void searchLaptopTest(){

@@ -1,6 +1,6 @@
-package com.selenium.automation.pom.amazon;
+package com.selenium.automation.pages.amazon;
 
-import com.selenium.automation.pom.base.BasePage;
+import com.selenium.automation.pages.base.BasePage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 

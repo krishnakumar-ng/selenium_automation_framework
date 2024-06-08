@@ -1,6 +1,5 @@
-package com.selenium.automation.pom.base;
+package com.selenium.automation.pages.base;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
