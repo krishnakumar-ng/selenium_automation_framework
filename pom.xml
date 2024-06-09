@@ -8,9 +8,12 @@
     <artifactId>selenium_automation_framework</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <name>Java-Selenium-Automation</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+        <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <apache-poi>5.2.5</apache-poi>
@@ -23,11 +26,18 @@
         <noexception.version>1.9.1</noexception.version>
         <owner.version>1.0.12</owner.version>
         <selenium-java.version>4.21.0</selenium-java.version>
+        <cucumber.version>7.18.0</cucumber.version>
+        <cucumber.reporting.version>5.7.7</cucumber.reporting.version>
+        <gherkin.version>28.0.0</gherkin.version>
         <testng.version>7.10.2</testng.version>
         <test-data-supplier.version>2.3.0</test-data-supplier.version>
         <webdrivermanager-version>5.7.0</webdrivermanager-version>
         <zerocell.version>0.5.1</zerocell.version>
         <slf4j.version>2.0.9</slf4j.version>
+
+<!--        Plugin Properties-->
+        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
     </properties>
 
     <dependencies>
@@ -152,6 +162,42 @@
             <artifactId>log4j-core</artifactId>
             <version>2.22.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-core -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-core</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/gherkin -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>gherkin</artifactId>
+            <version>${gherkin.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -159,20 +205,70 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <encoding>${project.build.outputEncoding}</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerArgument>-Xlint:deprecation</compilerArgument>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
+                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-                    <suiteXmlFiles>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
-                    </suiteXmlFiles>
+                    <systemPropertyVariables>
+                        <test.env>${test.env}</test.env>
+                        <com.sun.security.enableAIAcaIssuers>true</com.sun.security.enableAIAcaIssuers>
+                        <log4j2.formatMsgNoLookups>true</log4j2.formatMsgNoLookups>
+                    </systemPropertyVariables>
+                    <properties>
+                        <property>
+                            <name>dataproviderthreadcount</name>
+                            <value>${threadCount}</value>
+                        </property>
+                    </properties>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <test.env>dev</test.env>
+                <threadCount>1</threadCount>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>qa</id>
+            <properties>
+                <test.env>qa</test.env>
+                <threadCount>1</threadCount>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>stage</id>
+            <properties>
+                <test.env>stage</test.env>
+                <threadCount>1</threadCount>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <test.env>prod</test.env>
+                <threadCount>1</threadCount>
+            </properties>
+        </profile>
+    </profiles>
 </project>

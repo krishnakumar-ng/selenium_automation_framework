@@ -3,8 +3,10 @@ package com.selenium.automation.config;
 import com.selenium.automation.config.converter.StringToBrowserRemoteModeTypeConverter;
 import com.selenium.automation.config.converter.StringToRunTypeConverter;
 import com.selenium.automation.config.converter.StringToUrlConverter;
+import com.selenium.automation.config.converter.TestEnvConverter;
 import com.selenium.automation.enums.BrowserRemoteModeType;
 import com.selenium.automation.enums.RunType;
+import com.selenium.automation.enums.TestEnv;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigCache;
 
@@ -14,31 +16,35 @@ import java.net.URL;
 @Config.Sources({
         "system:properties",
         "system:env",
-        "file:${user.dir}/src/test/resources/config/cucumber.properties",
-        "file:${user.dir}/src/test/resources/config/${test.env}.properties"
+        "classpath:cucumber.properties",
+        "classpath:${test.env}.properties"
 })
 public interface ConfigPropertiesFactory extends Config {
 
     public static ConfigPropertiesFactory CONFIG_PROPERTIES = ConfigCache.getOrCreate(ConfigPropertiesFactory.class);
 
+    @Key("test.env")
+    @ConverterClass(TestEnvConverter.class)
+    TestEnv testEnv();
+
     @Key("base.url")
     String url();
 
     @DefaultValue("LOCAL")
-    @ConverterClass(StringToRunTypeConverter.class)
     @Key("run.mode")
+    @ConverterClass(StringToRunTypeConverter.class)
     RunType run_mode();
 
     @DefaultValue("SELENIUMGRID")
-    @ConverterClass(StringToBrowserRemoteModeTypeConverter.class)
     @Key("remote.mode")
+    @ConverterClass(StringToBrowserRemoteModeTypeConverter.class)
     BrowserRemoteModeType remote_mode();
 
-    @ConverterClass(StringToUrlConverter.class)
     @Key("selenium.grid.url")
+    @ConverterClass(StringToUrlConverter.class)
     URL seleniumGridUrl();
 
-    @ConverterClass(StringToUrlConverter.class)
     @Key("selenoid.url")
+    @ConverterClass(StringToUrlConverter.class)
     URL selenoidUrl();
 }
