@@ -1,5 +1,6 @@
 Feature: Amazon Search Feature
 
+  @SearchLaptop
   Scenario Outline: Amazon Search
     Given Open the Amazon Website
     And Enter the given product: <product>

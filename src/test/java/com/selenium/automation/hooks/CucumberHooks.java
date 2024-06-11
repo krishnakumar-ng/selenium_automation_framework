@@ -1,5 +1,7 @@
 package com.selenium.automation.hooks;
 
+import com.selenium.automation.driver.Driver;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.Scenario;
@@ -21,5 +23,10 @@ public class CucumberHooks {
         log.info("Scenario :\t{}", scenario.getName());
         log.info("*******************************************");
         log.info(String.valueOf(Thread.currentThread()));
+    }
+
+    @After
+    public static void closeBrowser(){
+        Driver.quitDriver();
     }
 }
