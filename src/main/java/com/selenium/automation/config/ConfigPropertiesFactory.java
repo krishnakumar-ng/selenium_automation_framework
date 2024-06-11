@@ -27,9 +27,6 @@ public interface ConfigPropertiesFactory extends Config {
     @ConverterClass(TestEnvConverter.class)
     TestEnv testEnv();
 
-    @Key("base.url")
-    String url();
-
     @DefaultValue("LOCAL")
     @Key("run.mode")
     @ConverterClass(StringToRunTypeConverter.class)
@@ -47,4 +44,7 @@ public interface ConfigPropertiesFactory extends Config {
     @Key("selenoid.url")
     @ConverterClass(StringToUrlConverter.class)
     URL selenoidUrl();
+
+    @Key("base.url")
+    String url();
 }

@@ -1,24 +1,34 @@
 package com.selenium.automation.tests;
 
 import com.selenium.automation.driver.Driver;
+import com.selenium.automation.driver.manager.DriverManager;
 import com.selenium.automation.enums.BrowserType;
+import com.selenium.automation.pages.amazon.AmazonHomePage;
+import com.selenium.automation.pages.amazon.AmazonSearchResultsPage;
+import com.selenium.automation.util.Util;
 import org.testng.annotations.Test;
 
 import static com.selenium.automation.config.ConfigPropertiesFactory.CONFIG_PROPERTIES;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AmazonSearchTest {
 
     @Test
-    public void searchLaptopTest() throws InterruptedException {
-        System.out.println(CONFIG_PROPERTIES.url());
-        System.out.println(CONFIG_PROPERTIES.testEnv());
-        System.out.println(CONFIG_PROPERTIES.run_mode());
-        System.out.println(CONFIG_PROPERTIES.remote_mode());
-        System.out.println(CONFIG_PROPERTIES.seleniumGridUrl());
-        System.out.println(CONFIG_PROPERTIES.selenoidUrl());
+    public void searchLaptopTest() {
+        Driver.initDriver(BrowserType.CHROME);
+        DriverManager.getDriver().get(CONFIG_PROPERTIES.url());
+        Util.Sync.sleep(60);
 
-//        Driver.initDriver(BrowserType.valueOf("CHROME"));
-//        Thread.sleep(10000);
-//        Driver.quitDriver();
+        AmazonHomePage homePage = new AmazonHomePage();
+        AmazonSearchResultsPage amazonSearchResultsPage = homePage.searchProduct("Laptop");
+        assertThat(amazonSearchResultsPage.getTitle()).as("Invalid results page")
+                .contains("Laptop");
+
+        String REGEX = ".*";
+        boolean regexMatch = amazonSearchResultsPage.getSearchResults().matches(REGEX);
+
+        assertThat(regexMatch)
+                .as("Search result regex is mismatched - "+amazonSearchResultsPage.getSearchResults())
+                .isTrue();
     }
 }

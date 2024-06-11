@@ -32,7 +32,6 @@ public final class Driver {
                     .getDriver(CONFIG_PROPERTIES.run_mode())
                     .getDriver(driverData));
         }
-        DriverManager.getDriver().get(CONFIG_PROPERTIES.url());
     }
 
     public static void quitDriver() {

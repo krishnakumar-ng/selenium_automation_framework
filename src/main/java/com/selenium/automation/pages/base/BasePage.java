@@ -19,7 +19,7 @@ public class BasePage {
         element.sendKeys(text);
     }
 
-    protected String getTitle(){
+    public String getTitle(){
         return DriverManager.getDriver().getTitle();
     }
 }
