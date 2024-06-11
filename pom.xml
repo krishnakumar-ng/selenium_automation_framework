@@ -6,7 +6,7 @@
 
     <groupId>com.selenium.automation</groupId>
     <artifactId>selenium_automation_framework</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>Java-Selenium-Automation</name>
 
@@ -35,9 +35,14 @@
         <zerocell.version>0.5.1</zerocell.version>
         <slf4j.version>2.0.9</slf4j.version>
 
-<!--        Plugin Properties-->
-        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <!--        Plugin Properties       -->
+        <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+        <maven.clean.plugin.version>3.3.2</maven.clean.plugin.version>
+        <maven.builder.helper.plugin.version>3.5.0</maven.builder.helper.plugin.version>
+        <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
+        <maven-cucumber-reporting.version>5.8.1</maven-cucumber-reporting.version>
+        <git.commit.id.plugin.version>4.9.10</git.commit.id.plugin.version>
     </properties>
 
     <dependencies>
@@ -227,11 +232,158 @@
                     </systemPropertyVariables>
                     <properties>
                         <property>
+                            <!--The default thread count of the data provider in parallel mode is 10.
+                                To change this, the dataproviderthreadcount property needs to be added
+                                to the configuration section of the Surefire Failsafe plugin in the POM.-->
                             <name>dataproviderthreadcount</name>
                             <value>${threadCount}</value>
                         </property>
                     </properties>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven.clean.plugin.version}</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/src/test/resources/</directory>
+                            <includes>
+                                <include>**/equipments.csv</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>backing up reports</id>
+                        <!-- insert here the phase you need -->
+                        <phase>test</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${results.dir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/cucumber-html-reports</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>**/cucumber.json</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}/src/test/resources/</directory>
+                                    <includes>
+                                        <include>**/cucumber.json</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-testResources</id>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/test/resources</directory>
+                                    <filtering>true</filtering>
+                                    <excludes>
+                                        <exclude>**/*.json</exclude>
+                                        <exclude>**/*.features</exclude>
+                                        <exclude>**/TC.xml</exclude>
+                                        <exclude>**/*.txt</exclude>
+                                        <exclude>**/ARM*.xml</exclude>
+                                        <exclude>**/Insert*.xml</exclude>
+                                        <exclude>**/application.properties</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${maven.builder.helper.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>result.time</name>
+                            <pattern>yyyy-MM-dd-HH-MM-ss-aa</pattern>
+                            <locale>en_US</locale>
+                            <timeZone>America/Detroit</timeZone>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>${maven-cucumber-reporting.version}</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>Java Selenium Automation</projectName>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <jsonFiles>
+                                <param>**/cucumber.json</param>
+                            </jsonFiles>
+                            <setSkippedAsNotFailing>true</setSkippedAsNotFailing>
+                            <checkBuildResult>false</checkBuildResult>
+                            <classifications>
+                                <version>${project.version}</version>
+                                <Platform>${os.name}</Platform>
+                                <!-- Suppress UnresolvedMavenProperty -->
+                                <Branch>${git.branch}</Branch>
+                            </classifications>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git.commit.id.plugin.version}</version>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                    <injectAllReactorProjects>true</injectAllReactorProjects>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>get-the-git-info</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
