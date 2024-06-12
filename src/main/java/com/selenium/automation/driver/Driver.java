@@ -7,6 +7,7 @@ import com.selenium.automation.enums.BrowserType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import static com.selenium.automation.config.ConfigPropertiesFactory.CONFIG_PROPERTIES;
@@ -32,6 +33,9 @@ public final class Driver {
                     .getDriver(CONFIG_PROPERTIES.run_mode())
                     .getDriver(driverData));
         }
+        DriverManager.getDriver().manage().window().maximize();
+        DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
+        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
     }
 
     public static void quitDriver() {

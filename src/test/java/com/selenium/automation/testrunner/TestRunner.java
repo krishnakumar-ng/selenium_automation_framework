@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {"src/test/resources/"},
+        glue = {"com.selenium.automation.stepdefinition"},
         monochrome = true,
         plugin = {"pretty:target/cucumber/cucumber.txt",
                 "html:target/cucumber/cucumber-html-report.html",
