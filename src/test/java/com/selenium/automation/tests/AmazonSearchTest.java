@@ -1,11 +1,13 @@
 package com.selenium.automation.tests;
 
 import com.selenium.automation.driver.Driver;
+import com.selenium.automation.driver.manager.DriverManager;
 import com.selenium.automation.enums.BrowserType;
 import com.selenium.automation.pages.amazon.AmazonHomePage;
 import com.selenium.automation.pages.amazon.AmazonSearchResultsPage;
 import com.selenium.automation.pages.base.AbstractTest;
 import com.selenium.automation.util.Util;
+import com.selenium.automation.util.screenshot.ScreenshotFactory;
 import org.testng.annotations.Test;
 
 import static com.selenium.automation.config.ConfigPropertiesFactory.CONFIG_PROPERTIES;
@@ -27,9 +29,10 @@ public class AmazonSearchTest extends AbstractTest {
 
         String REGEX = "\\d-\\d+ of over .* results for \"Laptop\"";
         boolean regexMatch = amazonSearchResultsPage.getSearchResults().matches(REGEX);
+        ScreenshotFactory.takeScreenshot(DriverManager.getDriver());
 
         assertThat(regexMatch)
-                .as("Search result regex is mismatched - "+amazonSearchResultsPage.getSearchResults())
+                .as("Search result regex is mismatched - " + amazonSearchResultsPage.getSearchResults())
                 .isTrue();
     }
 }
