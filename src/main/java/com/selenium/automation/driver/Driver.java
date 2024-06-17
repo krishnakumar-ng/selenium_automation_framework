@@ -21,7 +21,6 @@ import static com.selenium.automation.config.ConfigPropertiesFactory.CONFIG_PROP
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Driver {
-
     public static void initDriver(BrowserType browser) {
         DriverData driverData = DriverData.builder()
                 .browserType(browser)

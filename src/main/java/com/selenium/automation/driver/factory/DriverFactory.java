@@ -14,14 +14,14 @@ import java.util.function.Supplier;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DriverFactory {
 
-    private static final Map<RunType, Supplier<IDriver>> WEB = new EnumMap<>(RunType.class);
-
-    static {
-        WEB.put(RunType.LOCAL, LocalDriverImpl::new);
-        WEB.put(RunType.REMOTE, RemoteDriverImpl::new);
-    }
+    private static final Map<RunType, Supplier<IDriver>> WEBDRIVER = new EnumMap<>(RunType.class);
 
     public static IDriver getDriver(RunType runType) {
-        return WEB.get(runType).get();
+        switch (runType) {
+            case RunType.LOCAL -> WEBDRIVER.computeIfAbsent(RunType.LOCAL, k -> LocalDriverImpl::new);
+            case RunType.REMOTE -> WEBDRIVER.computeIfAbsent(RunType.REMOTE, k -> RemoteDriverImpl::new);
+            default -> throw new IllegalArgumentException("Invalid Run type - " + runType);
+        }
+        return WEBDRIVER.get(runType).get();
     }
 }
