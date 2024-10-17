@@ -1,6 +1,6 @@
 package com.selenium.automation.enums;
 
-public enum BrowserType {
+public enum BrowserName {
     CHROME,
     EDGE,
     FIREFOX

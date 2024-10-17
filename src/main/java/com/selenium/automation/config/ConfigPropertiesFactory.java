@@ -1,11 +1,11 @@
 package com.selenium.automation.config;
 
-import com.selenium.automation.config.converter.StringToBrowserRemoteModeTypeConverter;
-import com.selenium.automation.config.converter.StringToRunTypeConverter;
-import com.selenium.automation.config.converter.StringToUrlConverter;
+import com.selenium.automation.config.converter.BrowserRemoteModeConverter;
+import com.selenium.automation.config.converter.RunModeConverter;
+import com.selenium.automation.config.converter.UrlConverter;
 import com.selenium.automation.config.converter.TestEnvConverter;
-import com.selenium.automation.enums.BrowserRemoteModeType;
-import com.selenium.automation.enums.RunType;
+import com.selenium.automation.enums.BrowserRemoteMode;
+import com.selenium.automation.enums.RunMode;
 import com.selenium.automation.enums.TestEnv;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigCache;
@@ -29,22 +29,22 @@ public interface ConfigPropertiesFactory extends Config {
 
     @DefaultValue("LOCAL")
     @Key("run.mode")
-    @ConverterClass(StringToRunTypeConverter.class)
-    RunType run_mode();
+    @ConverterClass(RunModeConverter.class)
+    RunMode runMode();
 
     @DefaultValue("SELENIUMGRID")
-    @Key("remote.mode")
-    @ConverterClass(StringToBrowserRemoteModeTypeConverter.class)
-    BrowserRemoteModeType remote_mode();
+    @Key("browser.remote.mode")
+    @ConverterClass(BrowserRemoteModeConverter.class)
+    BrowserRemoteMode browserRemoteMode();
 
     @Key("selenium.grid.url")
-    @ConverterClass(StringToUrlConverter.class)
+    @ConverterClass(UrlConverter.class)
     URL seleniumGridUrl();
 
     @Key("selenoid.url")
-    @ConverterClass(StringToUrlConverter.class)
+    @ConverterClass(UrlConverter.class)
     URL selenoidUrl();
 
-    @Key("base.url")
+    @Key("aut.url")
     String url();
 }

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
 
-public class StringToUrlConverter implements Converter<URL> {
+public class UrlConverter implements Converter<URL> {
 
     @SneakyThrows
     @Override

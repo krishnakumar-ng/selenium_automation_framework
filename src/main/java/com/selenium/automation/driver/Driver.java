@@ -3,7 +3,7 @@ package com.selenium.automation.driver;
 import com.selenium.automation.driver.entity.DriverData;
 import com.selenium.automation.driver.factory.DriverFactory;
 import com.selenium.automation.driver.manager.DriverManager;
-import com.selenium.automation.enums.BrowserType;
+import com.selenium.automation.enums.BrowserName;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -21,15 +21,15 @@ import static com.selenium.automation.config.ConfigPropertiesFactory.CONFIG_PROP
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Driver {
-    public static void initDriver(BrowserType browser) {
+    public static void initDriver(BrowserName browser) {
         DriverData driverData = DriverData.builder()
-                .browserType(browser)
-                .browserRemoteModeType(CONFIG_PROPERTIES.remote_mode())
+                .browserName(browser)
+                .browserRemoteMode(CONFIG_PROPERTIES.browserRemoteMode())
                 .build();
 
         if (Objects.isNull(DriverManager.getDriver())) {
             DriverManager.setDriver(DriverFactory
-                    .getDriver(CONFIG_PROPERTIES.run_mode())
+                    .getDriver(CONFIG_PROPERTIES.runMode())
                     .getDriver(driverData));
         }
         DriverManager.getDriver().manage().window().maximize();

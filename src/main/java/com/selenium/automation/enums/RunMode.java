@@ -1,6 +1,6 @@
 package com.selenium.automation.enums;
 
-public enum RunType {
+public enum RunMode {
     LOCAL,
     REMOTE
 }

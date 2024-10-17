@@ -1,7 +1,7 @@
 package com.selenium.automation.driver.entity;
 
-import com.selenium.automation.enums.BrowserRemoteModeType;
-import com.selenium.automation.enums.BrowserType;
+import com.selenium.automation.enums.BrowserRemoteMode;
+import com.selenium.automation.enums.BrowserName;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,6 +12,6 @@ import lombok.Getter;
 @Builder
 @Getter
 public class DriverData {
-    private BrowserType browserType;
-    private BrowserRemoteModeType browserRemoteModeType;
+    private BrowserName browserName;
+    private BrowserRemoteMode browserRemoteMode;
 }

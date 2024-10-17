@@ -1,6 +1,6 @@
 package com.selenium.automation.enums;
 
-public enum BrowserRemoteModeType {
+public enum BrowserRemoteMode {
     SELENIUMGRID, SELENOID
 }
 

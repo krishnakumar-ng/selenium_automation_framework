@@ -1,10 +1,7 @@
 package com.selenium.automation.driver.factory.remote;
 
-import com.selenium.automation.driver.manager.local.ChromeManager;
-import com.selenium.automation.driver.manager.local.EdgeManager;
-import com.selenium.automation.driver.manager.local.FirefoxManager;
-import com.selenium.automation.enums.BrowserRemoteModeType;
-import com.selenium.automation.enums.BrowserType;
+import com.selenium.automation.enums.BrowserRemoteMode;
+import com.selenium.automation.enums.BrowserName;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.openqa.selenium.WebDriver;
@@ -15,16 +12,16 @@ import java.util.function.Function;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RemoteDriverFactory {
-    private static final Map<BrowserRemoteModeType, Function<BrowserType, WebDriver>>
-            MAP = new EnumMap<>(BrowserRemoteModeType.class);
+    private static final Map<BrowserRemoteMode, Function<BrowserName, WebDriver>>
+            MAP = new EnumMap<>(BrowserRemoteMode.class);
 
-    public static WebDriver getDriver(BrowserRemoteModeType browserRemoteMode, BrowserType browserType) {
+    public static WebDriver getDriver(BrowserRemoteMode browserRemoteMode, BrowserName browserName) {
         switch (browserRemoteMode) {
-            case SELENIUMGRID -> MAP.computeIfAbsent(BrowserRemoteModeType.SELENIUMGRID, k -> SeleniumGridFactory::getDriver);
-            case SELENOID -> MAP.computeIfAbsent(BrowserRemoteModeType.SELENOID, k -> SelenoidFactory::getDriver);
+            case SELENIUMGRID -> MAP.computeIfAbsent(BrowserRemoteMode.SELENIUMGRID, k -> SeleniumGridFactory::getDriver);
+            case SELENOID -> MAP.computeIfAbsent(BrowserRemoteMode.SELENOID, k -> SelenoidFactory::getDriver);
             default -> throw new IllegalArgumentException("Invalid Remote type - " + browserRemoteMode);
         }
 
-        return MAP.get(browserRemoteMode).apply(browserType);
+        return MAP.get(browserRemoteMode).apply(browserName);
     }
 }

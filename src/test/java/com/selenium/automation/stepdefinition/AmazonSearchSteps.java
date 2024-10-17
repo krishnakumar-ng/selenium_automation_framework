@@ -2,7 +2,7 @@ package com.selenium.automation.stepdefinition;
 
 import com.selenium.automation.contexts.TestContext;
 import com.selenium.automation.driver.Driver;
-import com.selenium.automation.enums.BrowserType;
+import com.selenium.automation.enums.BrowserName;
 import com.selenium.automation.pages.amazon.AmazonHomePage;
 import com.selenium.automation.pages.amazon.AmazonSearchResultsPage;
 import com.selenium.automation.pages.base.AbstractTest;
@@ -30,10 +30,10 @@ public class AmazonSearchSteps extends AbstractTest {
 
     @Given("Open the Amazon Website")
     public void openTheAmazonWebsite() {
-        Driver.initDriver(BrowserType.CHROME);
+        Driver.initDriver(BrowserName.CHROME);
         openUrl(CONFIG_PROPERTIES.url());
         Util.Sync.sleep(60);
-        log.info("{} is launched with url : {}",BrowserType.CHROME,CONFIG_PROPERTIES.url());
+        log.info("{} is launched with url : {}", BrowserName.CHROME,CONFIG_PROPERTIES.url());
     }
 
     @And("Enter the given product: {}")

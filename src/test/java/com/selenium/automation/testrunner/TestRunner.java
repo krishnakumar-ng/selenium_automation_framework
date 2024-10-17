@@ -6,12 +6,10 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {"src/test/resources/"},
-        glue = {"com.selenium.automation.stepdefinition"},
-        monochrome = true,
-        plugin = {"pretty:target/cucumber/cucumber.txt",
-                "html:target/cucumber/cucumber-html-report.html",
-                "json:target/cucumber/cucumber.json",
-                "rerun:target/rerun/failed_scenarios.txt"}
+        glue ={"com.selenium.automation.stepdefinition"},
+        plugin = {"json:target/cucumber/cucumber.json",
+                "html:target/cucumber/cucumber-html-reports/consolidated.html",
+                "rerun:target/cucumber/cucumber-html-reports/rerun.txt"}
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
     @Override

@@ -1,7 +1,7 @@
 package com.selenium.automation.enums;
 
 
-public enum CategoryType {
+public enum TestSuiteType {
 	REGRESSION,
 	SMOKE,
 	SANITY

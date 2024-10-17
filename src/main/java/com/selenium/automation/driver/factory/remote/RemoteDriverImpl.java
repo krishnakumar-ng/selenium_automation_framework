@@ -8,6 +8,6 @@ public class RemoteDriverImpl implements IDriver {
 
     @Override
     public WebDriver getDriver(DriverData driverData) {
-        return RemoteDriverFactory.getDriver(driverData.getBrowserRemoteModeType(), driverData.getBrowserType());
+        return RemoteDriverFactory.getDriver(driverData.getBrowserRemoteMode(), driverData.getBrowserName());
     }
 }

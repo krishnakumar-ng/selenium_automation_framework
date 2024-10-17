@@ -8,6 +8,6 @@ public class LocalDriverImpl implements IDriver {
 
     @Override
     public WebDriver getDriver(DriverData driverData) {
-        return LocalDriverFactory.getDriver(driverData.getBrowserType());
+        return LocalDriverFactory.getDriver(driverData.getBrowserName());
     }
 }

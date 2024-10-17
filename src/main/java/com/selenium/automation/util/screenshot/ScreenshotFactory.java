@@ -7,6 +7,9 @@ import org.openqa.selenium.WebDriver;
 @Slf4j
 @UtilityClass
 public class ScreenshotFactory {
+
+
+
     public void takeScreenshot(WebDriver driver) {
         Screenshot screenshot = new Screenshot();
         screenshot.takeScreenshot(driver);
